@@ -14,14 +14,7 @@ import {
 import { useState } from "react";
 import { useAppTheme } from "../theme/ThemeContext";
 
-interface CiPlatform {
-  id: string;
-  name: string;
-  filename: string;
-  description: string;
-}
-
-const platforms: CiPlatform[] = [
+const platforms = [
   { id: "gitlab", name: "GitLab CI", filename: ".gitlab-ci.yml", description: "Add the following stage to your GitLab CI pipeline" },
   { id: "jenkins", name: "Jenkins", filename: "Jenkinsfile", description: "Add the following stage to your Jenkins pipeline" },
   { id: "github", name: "GitHub Actions", filename: ".github/workflows/deepview.yml", description: "Add the following step to your GitHub Actions workflow" },
@@ -37,7 +30,7 @@ const curlTemplate = `curl -X POST https://deepview.example.com/api/v1/scan \\
     "sbom": "<BASE64_ENCODED_SBOM>"
   }'`;
 
-function getPipelineSnippet(platformId: string): string {
+function getPipelineSnippet(platformId) {
   switch (platformId) {
     case "gitlab":
       return `# .gitlab-ci.yml
@@ -135,7 +128,7 @@ steps:
   }
 }
 
-function CodeBlock({ code, label }: { code: string; label?: string }) {
+function CodeBlock({ code, label }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {

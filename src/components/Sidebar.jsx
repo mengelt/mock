@@ -29,35 +29,29 @@ import { useAppTheme } from "../theme/ThemeContext";
 
 const DRAWER_WIDTH = 260;
 
-interface NavItem {
-  label: string;
-  icon: React.ReactNode;
-  path?: string;
-}
-
-const mainNav: NavItem[] = [
+const mainNav = [
   { label: "Applications", icon: <DashboardRounded />, path: "/app" },
   { label: "Create API Token", icon: <VpnKeyRounded />, path: "/app/create-token" },
   { label: "Getting Started", icon: <RocketLaunchRounded />, path: "/app/getting-started" },
 ];
 
-const analysisNav: NavItem[] = [
+const analysisNav = [
   { label: "Package Search", icon: <SearchRounded />, path: "/app/package-search" },
   { label: "Vendor SBOM Analysis", icon: <FactCheckRounded /> },
   { label: "CVE Search", icon: <BugReportRounded /> },
   { label: "Inventory & Licenses", icon: <InventoryRounded /> },
 ];
 
-const scanNav: NavItem[] = [
+const scanNav = [
   { label: "Pending Scans", icon: <PendingActionsRounded />, path: "/app/pending-scans" },
   { label: "Completed Scans", icon: <CheckCircleRounded /> },
 ];
 
-const reportingNav: NavItem[] = [
+const reportingNav = [
   { label: "Enterprise Health", icon: <AssessmentRounded />, path: "/app/enterprise-health" },
 ];
 
-const systemNav: NavItem[] = [
+const systemNav = [
   { label: "Service Health", icon: <MonitorHeartRounded /> },
   { label: "Application Logs", icon: <DescriptionRounded /> },
 ];
@@ -69,13 +63,6 @@ function NavSection({
   onNavigate,
   primary,
   primaryLight,
-}: {
-  items: NavItem[];
-  label?: string;
-  activePath: string;
-  onNavigate: (path: string) => void;
-  primary: string;
-  primaryLight: string;
 }) {
   return (
     <Box sx={{ mb: 1 }}>

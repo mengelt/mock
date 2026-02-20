@@ -1,17 +1,10 @@
-import { createContext, useContext, useState, useMemo, type ReactNode } from "react";
-import presets, { type ThemePreset } from "./presets";
+import { createContext, useContext, useState, useMemo } from "react";
+import presets from "./presets";
 import { buildTheme } from "./theme";
-import { type Theme } from "@mui/material/styles";
-
-interface ThemeContextValue {
-  preset: ThemePreset;
-  muiTheme: Theme;
-  setPresetId: (id: string) => void;
-}
 
 const STORAGE_KEY = "deepview-theme";
 
-function loadPreset(): ThemePreset {
+function loadPreset() {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
@@ -24,14 +17,14 @@ function loadPreset(): ThemePreset {
   return presets[0];
 }
 
-const ThemeContext = createContext<ThemeContextValue>(null!);
+const ThemeContext = createContext(null);
 
-export function AppThemeProvider({ children }: { children: ReactNode }) {
-  const [preset, setPreset] = useState<ThemePreset>(loadPreset);
+export function AppThemeProvider({ children }) {
+  const [preset, setPreset] = useState(loadPreset);
 
   const muiTheme = useMemo(() => buildTheme(preset), [preset]);
 
-  const setPresetId = (id: string) => {
+  const setPresetId = (id) => {
     const found = presets.find((p) => p.id === id);
     if (found) {
       setPreset(found);

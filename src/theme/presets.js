@@ -1,13 +1,4 @@
-export interface ThemePreset {
-  id: string;
-  name: string;
-  primary: string;
-  primaryLight: string;
-  sidebar: string;
-  swatch: [string, string, string]; // preview colors for the settings UI
-}
-
-const presets: ThemePreset[] = [
+const presets = [
   {
     id: "ocean",
     name: "Ocean",

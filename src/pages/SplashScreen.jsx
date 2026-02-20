@@ -24,7 +24,7 @@ export default function SplashScreen() {
   const location = useLocation();
   const { preset } = useAppTheme();
 
-  const signedOut = !!(location.state as { signedOut?: boolean } | null)?.signedOut;
+  const signedOut = !!location.state?.signedOut;
 
   const [status, setStatus] = useState(signedOut ? "" : "Connecting...");
   const [loading, setLoading] = useState(!signedOut);

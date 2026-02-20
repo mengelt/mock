@@ -1,6 +1,4 @@
-import { ProjectGroup, Dependency } from "./types";
-
-export const projectGroups: ProjectGroup[] = [
+export const projectGroups = [
   {
     name: "CAIRO",
     projects: [
@@ -110,7 +108,7 @@ export const projectGroups: ProjectGroup[] = [
 ];
 
 /** Flat lookup for project by ID */
-export function findProjectById(id: string) {
+export function findProjectById(id) {
   for (const g of projectGroups) {
     const p = g.projects.find((proj) => proj.id === id);
     if (p) return { project: p, group: g.name };
@@ -119,7 +117,7 @@ export function findProjectById(id: string) {
 }
 
 /** Mock dependency list keyed by project ID */
-export const projectDependencies: Record<string, Dependency[]> = {
+export const projectDependencies = {
   "cairo-fe": [
     { name: "lodash", installedVersion: "4.17.20", latestVersion: "4.17.21", isDirect: true, license: "MIT", licenseCompliant: true, cves: [{ id: "CVE-2021-23337", severity: "critical", score: 9.8, fixVersion: "4.17.21", published: "2021-02-15" }] },
     { name: "axios", installedVersion: "0.21.1", latestVersion: "1.7.2", isDirect: true, license: "MIT", licenseCompliant: true, cves: [{ id: "CVE-2023-45857", severity: "high", score: 7.5, fixVersion: "1.6.0", published: "2023-11-08" }] },

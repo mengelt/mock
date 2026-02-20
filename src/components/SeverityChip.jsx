@@ -1,19 +1,13 @@
 import { Box, Typography, alpha } from "@mui/material";
-import type { Severity } from "../data/types";
 
-const config: Record<Severity, { color: string; label: string }> = {
+const config = {
   critical: { color: "#dc2626", label: "C" },
   high: { color: "#f59e0b", label: "H" },
   medium: { color: "#6366f1", label: "M" },
   low: { color: "#22c55e", label: "L" },
 };
 
-interface Props {
-  severity: Severity;
-  count: number;
-}
-
-export default function SeverityChip({ severity, count }: Props) {
+export default function SeverityChip({ severity, count }) {
   const { color, label } = config[severity];
   const isEmpty = count === 0;
 

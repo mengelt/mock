@@ -1,13 +1,8 @@
 import { Box, Typography, Chip, alpha } from "@mui/material";
 import { FolderRounded } from "@mui/icons-material";
 import ProjectCard from "./ProjectCard";
-import type { ProjectGroup as ProjectGroupType } from "../data/types";
 
-interface Props {
-  group: ProjectGroupType;
-}
-
-export default function ProjectGroup({ group }: Props) {
+export default function ProjectGroup({ group }) {
   const totalVulns = group.projects.reduce(
     (sum, p) =>
       sum + p.vulnerabilities.critical + p.vulnerabilities.high + p.vulnerabilities.medium + p.vulnerabilities.low,

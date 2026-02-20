@@ -10,7 +10,6 @@ import { SearchRounded } from "@mui/icons-material";
 import SummaryCards from "../components/SummaryCards";
 import ProjectGroup from "../components/ProjectGroup";
 import { projectGroups } from "../data/mockData";
-import type { ProjectGroup as ProjectGroupType } from "../data/types";
 
 export default function Dashboard() {
   const [search, setSearch] = useState("");
@@ -20,7 +19,7 @@ export default function Dashboard() {
   // Flatten all projects, filter by search, then re-group for display
   const { filtered, totalCount } = useMemo(() => {
     const q = search.toLowerCase();
-    const groups: ProjectGroupType[] = [];
+    const groups = [];
 
     for (const g of projectGroups) {
       const matching = q
@@ -41,10 +40,10 @@ export default function Dashboard() {
     const end = start + rowsPerPage;
 
     let idx = 0;
-    const groups: ProjectGroupType[] = [];
+    const groups = [];
 
     for (const g of filtered) {
-      const slice: typeof g.projects = [];
+      const slice = [];
       for (const p of g.projects) {
         if (idx >= start && idx < end) slice.push(p);
         idx++;
@@ -55,7 +54,7 @@ export default function Dashboard() {
     return groups;
   }, [filtered, page, rowsPerPage]);
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearch = (e) => {
     setSearch(e.target.value);
     setPage(0);
   };

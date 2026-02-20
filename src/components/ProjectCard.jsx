@@ -14,7 +14,6 @@ import {
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import SeverityChip from "./SeverityChip";
-import type { ProjectScan, Severity } from "../data/types";
 
 const statusConfig = {
   passing: { label: "Passing", color: "#22c55e" },
@@ -22,11 +21,7 @@ const statusConfig = {
   failing: { label: "Failing", color: "#dc2626" },
 };
 
-interface Props {
-  project: ProjectScan;
-}
-
-export default function ProjectCard({ project }: Props) {
+export default function ProjectCard({ project }) {
   const navigate = useNavigate();
   const { vulnerabilities, status } = project;
   const totalVulns = vulnerabilities.critical + vulnerabilities.high + vulnerabilities.medium + vulnerabilities.low;
@@ -111,7 +106,7 @@ export default function ProjectCard({ project }: Props) {
       <Box sx={{ px: 3, py: 2.5, display: "flex", alignItems: "center" }}>
         {/* Vulnerabilities */}
         <Box sx={{ display: "flex", gap: 2, mr: "auto" }}>
-          {(["critical", "high", "medium", "low"] as Severity[]).map((sev) => (
+          {["critical", "high", "medium", "low"].map((sev) => (
             <SeverityChip key={sev} severity={sev} count={vulnerabilities[sev]} />
           ))}
         </Box>

@@ -30,30 +30,14 @@ import {
   WarningAmberRounded,
 } from "@mui/icons-material";
 
-type ScanPhase = "queued" | "downloading" | "analyzing" | "enriching";
-
-interface PendingScan {
-  id: string;
-  project: string;
-  group: string;
-  triggeredBy: string;
-  triggeredAt: string;
-  phase: ScanPhase;
-  progress: number; // 0-100
-  queuePosition: number | null;
-  estimatedWait: string;
-  ecosystem: string;
-  version: string;
-}
-
-const phaseConfig: Record<ScanPhase, { label: string; color: string }> = {
+const phaseConfig = {
   queued: { label: "Queued", color: "#94a3b8" },
   downloading: { label: "Downloading SBOM", color: "#3b82f6" },
   analyzing: { label: "Analyzing", color: "#6366f1" },
   enriching: { label: "CVE Enrichment", color: "#f59e0b" },
 };
 
-const initialScans: PendingScan[] = [
+const initialScans = [
   { id: "s1", project: "cairo-frontend", group: "CAIRO", triggeredBy: "CI/CD Pipeline", triggeredAt: "Feb 9, 2026, 10:32 AM", phase: "enriching", progress: 82, queuePosition: null, estimatedWait: "< 1 min", ecosystem: "NPM", version: "2.14.1" },
   { id: "s2", project: "deepview-api-gateway", group: "DEEPVIEW", triggeredBy: "CI/CD Pipeline", triggeredAt: "Feb 9, 2026, 10:30 AM", phase: "analyzing", progress: 55, queuePosition: null, estimatedWait: "~2 min", ecosystem: "NPM", version: "3.2.1" },
   { id: "s3", project: "platform-auth-service", group: "PLATFORM", triggeredBy: "mmengelt", triggeredAt: "Feb 9, 2026, 10:28 AM", phase: "downloading", progress: 23, queuePosition: null, estimatedWait: "~4 min", ecosystem: "NPM", version: "2.0.5" },
@@ -63,7 +47,7 @@ const initialScans: PendingScan[] = [
   { id: "s7", project: "cairo-infra", group: "CAIRO", triggeredBy: "CI/CD Pipeline", triggeredAt: "Feb 9, 2026, 10:24 AM", phase: "queued", progress: 0, queuePosition: 4, estimatedWait: "~11 min", ecosystem: "NPM", version: "0.9.2" },
 ];
 
-function MetricCard({ icon, label, value, sub, color }: { icon: React.ReactNode; label: string; value: string | number; sub?: string; color: string }) {
+function MetricCard({ icon, label, value, sub, color }) {
   return (
     <Paper sx={{ flex: 1, p: 2.5, minWidth: 0 }}>
       <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
@@ -82,7 +66,7 @@ function MetricCard({ icon, label, value, sub, color }: { icon: React.ReactNode;
 
 export default function PendingScans() {
   const [scans, setScans] = useState(initialScans);
-  const [cancelTarget, setCancelTarget] = useState<PendingScan | null>(null);
+  const [cancelTarget, setCancelTarget] = useState(null);
 
   const handleCancel = () => {
     if (cancelTarget) {

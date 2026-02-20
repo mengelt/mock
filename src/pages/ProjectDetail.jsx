@@ -33,16 +33,11 @@ import {
 } from "@mui/icons-material";
 import SeverityChip from "../components/SeverityChip";
 import { findProjectById, projectDependencies } from "../data/mockData";
-import type { Severity, Dependency } from "../data/types";
 
-const severityOrder: Record<Severity, number> = { critical: 0, high: 1, medium: 2, low: 3 };
-const severityColor: Record<Severity, string> = { critical: "#dc2626", high: "#f59e0b", medium: "#6366f1", low: "#22c55e" };
+const severityOrder = { critical: 0, high: 1, medium: 2, low: 3 };
+const severityColor = { critical: "#dc2626", high: "#f59e0b", medium: "#6366f1", low: "#22c55e" };
 
-type SortField = "name" | "severity" | "score" | "license";
-type SortDir = "asc" | "desc";
-type FilterMode = "all" | "vulnerable" | "outdated" | "license-issue";
-
-function highestSeverity(dep: Dependency): Severity | null {
+function highestSeverity(dep) {
   if (dep.cves.length === 0) return null;
   return dep.cves.reduce((worst, cve) =>
     severityOrder[cve.severity] < severityOrder[worst] ? cve.severity : worst,
@@ -50,7 +45,7 @@ function highestSeverity(dep: Dependency): Severity | null {
   );
 }
 
-function SeverityBadge({ severity }: { severity: Severity }) {
+function SeverityBadge({ severity }) {
   const color = severityColor[severity];
   return (
     <Chip
@@ -62,18 +57,18 @@ function SeverityBadge({ severity }: { severity: Severity }) {
 }
 
 export default function ProjectDetail() {
-  const { projectId } = useParams<{ projectId: string }>();
+  const { projectId } = useParams();
   const navigate = useNavigate();
 
   const result = findProjectById(projectId ?? "");
   const deps = projectDependencies[projectId ?? ""] ?? [];
 
   const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState<FilterMode>("all");
-  const [sortField, setSortField] = useState<SortField>("severity");
-  const [sortDir, setSortDir] = useState<SortDir>("asc");
+  const [filter, setFilter] = useState("all");
+  const [sortField, setSortField] = useState("severity");
+  const [sortDir, setSortDir] = useState("asc");
 
-  const handleSort = (field: SortField) => {
+  const handleSort = (field) => {
     if (field === sortField) {
       setSortDir((d) => (d === "asc" ? "desc" : "asc"));
     } else {
@@ -172,7 +167,7 @@ export default function ProjectDetail() {
             gap: 3,
           }}
         >
-          {(["critical", "high", "medium", "low"] as Severity[]).map((s) => (
+          {["critical", "high", "medium", "low"].map((s) => (
             <SeverityChip key={s} severity={s} count={project.vulnerabilities[s]} />
           ))}
 

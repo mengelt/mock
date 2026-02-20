@@ -43,19 +43,7 @@ import { DRAWER_WIDTH } from "./Sidebar";
 import { useAppTheme } from "../theme/ThemeContext";
 import presets from "../theme/presets";
 
-type ModalType = "profile" | "announcements" | "about" | "settings" | "osv" | null;
-
-interface OsvEcosystem {
-  name: string;
-  icon: string;
-  totalVulns: number;
-  malwareCount: number;
-  lastUpdated: string;
-  reviewed: number;
-  avgSeverity: string;
-}
-
-const osvData: OsvEcosystem[] = [
+const osvData = [
   { name: "npm", icon: "NPM", totalVulns: 14_823, malwareCount: 6_214, lastUpdated: "Feb 9, 2026, 6:00 AM", reviewed: 11_402, avgSeverity: "High" },
   { name: "PyPI", icon: "PyPI", totalVulns: 9_417, malwareCount: 3_892, lastUpdated: "Feb 9, 2026, 5:45 AM", reviewed: 7_103, avgSeverity: "High" },
   { name: "NuGet", icon: "NuGet", totalVulns: 3_241, malwareCount: 287, lastUpdated: "Feb 9, 2026, 4:30 AM", reviewed: 2_980, avgSeverity: "Medium" },
@@ -134,7 +122,7 @@ const dialogPaperProps = {
   },
 };
 
-function ModalHeader({ title, onClose }: { title: string; onClose: () => void }) {
+function ModalHeader({ title, onClose }) {
   return (
     <DialogTitle sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", pb: 1 }}>
       <Typography variant="h6" sx={{ fontSize: "1rem" }}>{title}</Typography>
@@ -145,7 +133,7 @@ function ModalHeader({ title, onClose }: { title: string; onClose: () => void })
   );
 }
 
-function LabeledRow({ icon, label, children }: { icon: React.ReactNode; label: string; children: React.ReactNode }) {
+function LabeledRow({ icon, label, children }) {
   return (
     <Box sx={{ display: "flex", gap: 2, py: 1.5 }}>
       <Box sx={{ color: "#94a3b8", mt: "2px", flexShrink: 0 }}>{icon}</Box>
@@ -160,7 +148,7 @@ function LabeledRow({ icon, label, children }: { icon: React.ReactNode; label: s
 }
 
 export default function TopBar() {
-  const [modal, setModal] = useState<ModalType>(null);
+  const [modal, setModal] = useState(null);
   const [osvLoading, setOsvLoading] = useState(false);
   const { preset, setPresetId } = useAppTheme();
   const navigate = useNavigate();

@@ -8,14 +8,7 @@ import {
 } from "@mui/icons-material";
 import { summaryStats } from "../data/mockData";
 
-interface StatCardProps {
-  icon: React.ReactNode;
-  label: string;
-  value: number;
-  color: string;
-}
-
-function StatCard({ icon, label, value, color }: StatCardProps) {
+function StatCard({ icon, label, value, color }) {
   return (
     <Paper
       sx={{

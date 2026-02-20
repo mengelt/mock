@@ -27,17 +27,7 @@ const ecosystems = [
   { value: "nuget", label: "NuGet (coming soon)", disabled: true },
 ];
 
-interface FormState {
-  esatsId: string;
-  projectSlug: string;
-  ecosystem: string;
-  gitlabProjectId: string;
-  repoVisibility: "public" | "private";
-  gitlabAccessToken: string;
-  description: string;
-}
-
-const initialState: FormState = {
+const initialState = {
   esatsId: "",
   projectSlug: "",
   ecosystem: "npm",
@@ -48,14 +38,14 @@ const initialState: FormState = {
 };
 
 export default function CreateApiToken() {
-  const [form, setForm] = useState<FormState>(initialState);
+  const [form, setForm] = useState(initialState);
 
-  const update = (field: keyof FormState) => (e: React.ChangeEvent<HTMLInputElement>) =>
+  const update = (field) => (e) =>
     setForm((prev) => ({ ...prev, [field]: e.target.value }));
 
   const handleClear = () => setForm(initialState);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     // Future: POST to API
   };

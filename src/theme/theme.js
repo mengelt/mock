@@ -1,5 +1,4 @@
 import { createTheme, alpha } from "@mui/material/styles";
-import type { ThemePreset } from "./presets";
 
 // Severity colors stay constant across themes
 export const CRITICAL = "#dc2626";
@@ -7,7 +6,7 @@ export const HIGH = "#f59e0b";
 export const MEDIUM = "#6366f1";
 export const LOW = "#22c55e";
 
-export function buildTheme(preset: ThemePreset) {
+export function buildTheme(preset) {
   return createTheme({
     palette: {
       primary: { main: preset.primary },
@@ -30,7 +29,7 @@ export function buildTheme(preset: ThemePreset) {
       h5: { fontWeight: 700, letterSpacing: "-0.01em" },
       h6: { fontWeight: 600 },
       subtitle1: { fontWeight: 600 },
-      subtitle2: { fontWeight: 600, fontSize: "0.8rem", letterSpacing: "0.04em", textTransform: "uppercase" as const },
+      subtitle2: { fontWeight: 600, fontSize: "0.8rem", letterSpacing: "0.04em", textTransform: "uppercase" },
       body2: { color: "#64748b" },
     },
     shape: { borderRadius: 12 },
@@ -56,7 +55,7 @@ export function buildTheme(preset: ThemePreset) {
       },
       MuiButton: {
         styleOverrides: {
-          root: { textTransform: "none" as const, fontWeight: 600 },
+          root: { textTransform: "none", fontWeight: 600 },
         },
       },
       MuiListItemButton: {

@@ -38,7 +38,6 @@ import {
   Area,
 } from "recharts";
 import { projectGroups } from "../data/mockData";
-import type { ProjectScan } from "../data/types";
 
 const COLORS = {
   critical: "#dc2626",
@@ -67,7 +66,7 @@ const trendData = [
 
 function useAggregatedData() {
   return useMemo(() => {
-    const allProjects: ProjectScan[] = projectGroups.flatMap((g) => g.projects);
+    const allProjects = projectGroups.flatMap((g) => g.projects);
 
     const vulns = { critical: 0, high: 0, medium: 0, low: 0 };
     const licenses = { compliant: 0, nonCompliant: 0, unknown: 0 };
@@ -151,7 +150,7 @@ function useAggregatedData() {
   }, []);
 }
 
-function ScoreCard({ icon, label, value, subtext, color }: { icon: React.ReactNode; label: string; value: string | number; subtext?: string; color: string }) {
+function ScoreCard({ icon, label, value, subtext, color }) {
   return (
     <Paper sx={{ flex: 1, p: 2.5, minWidth: 0 }}>
       <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>

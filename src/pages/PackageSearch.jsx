@@ -24,18 +24,7 @@ import {
   ErrorRounded,
 } from "@mui/icons-material";
 
-interface SearchResult {
-  project: string;
-  group: string;
-  installedVersion: string;
-  latestVersion: string;
-  isDirect: boolean;
-  lastScanned: string;
-  status: "passing" | "warning" | "failing";
-  cveCount: number;
-}
-
-const fakeResults: Record<string, SearchResult[]> = {
+const fakeResults = {
   lodash: [
     { project: "cairo-frontend", group: "CAIRO", installedVersion: "4.17.20", latestVersion: "4.17.21", isDirect: true, lastScanned: "Feb 9, 2026, 10:17 AM", status: "failing", cveCount: 1 },
     { project: "deepview-api-gateway", group: "DEEPVIEW", installedVersion: "4.17.21", latestVersion: "4.17.21", isDirect: false, lastScanned: "Feb 9, 2026, 8:00 AM", status: "passing", cveCount: 0 },
@@ -61,7 +50,7 @@ const fakeResults: Record<string, SearchResult[]> = {
 };
 
 // For any query not in the fake map, generate some results
-function getResults(query: string): SearchResult[] {
+function getResults(query) {
   const q = query.toLowerCase().trim();
   for (const [key, results] of Object.entries(fakeResults)) {
     if (q.includes(key) || key.includes(q)) return results;
@@ -81,7 +70,7 @@ const statusConfig = {
 
 export default function PackageSearch() {
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<SearchResult[] | null>(null);
+  const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
   const [searchedTerm, setSearchedTerm] = useState("");
 
@@ -97,7 +86,7 @@ export default function PackageSearch() {
     }, 800 + Math.random() * 600);
   }, [query]);
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e) => {
     if (e.key === "Enter") handleSearch();
   };
 
