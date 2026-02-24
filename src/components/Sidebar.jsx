@@ -37,14 +37,14 @@ const mainNav = [
 
 const analysisNav = [
   { label: "Package Search", icon: <SearchRounded />, path: "/app/package-search" },
-  { label: "Vendor SBOM Analysis", icon: <FactCheckRounded /> },
-  { label: "CVE Search", icon: <BugReportRounded /> },
+  { label: "Vendor SBOM Analysis", icon: <FactCheckRounded />, path: "/app/vendor-sbom" },
+  { label: "CVE Search", icon: <BugReportRounded />, path: "/app/cve-search" },
   { label: "Inventory & Licenses", icon: <InventoryRounded /> },
 ];
 
 const scanNav = [
   { label: "Pending Scans", icon: <PendingActionsRounded />, path: "/app/pending-scans" },
-  { label: "Completed Scans", icon: <CheckCircleRounded /> },
+  { label: "Completed Scans", icon: <CheckCircleRounded />, path: "/app/completed-scans" },
 ];
 
 const reportingNav = [
