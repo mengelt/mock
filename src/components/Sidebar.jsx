@@ -23,6 +23,7 @@ import {
   DescriptionRounded,
   SecurityRounded,
   AssessmentRounded,
+  RadarRounded,
 } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppTheme } from "../theme/ThemeContext";
@@ -43,6 +44,7 @@ const analysisNav = [
 ];
 
 const scanNav = [
+  { label: "Ad-Hoc Scan", icon: <RadarRounded />, path: "/app/adhoc-scan" },
   { label: "Pending Scans", icon: <PendingActionsRounded />, path: "/app/pending-scans" },
   { label: "Completed Scans", icon: <CheckCircleRounded />, path: "/app/completed-scans" },
 ];

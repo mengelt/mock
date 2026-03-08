@@ -14,6 +14,7 @@ import EnterpriseHealth from "./pages/EnterpriseHealth";
 import PackageSearch from "./pages/PackageSearch";
 import VendorSbomAnalysis from "./pages/VendorSbomAnalysis";
 import CveSearch from "./pages/CveSearch";
+import AdHocScan from "./pages/AdHocScan";
 import PendingScans from "./pages/PendingScans";
 import CompletedScans from "./pages/CompletedScans";
 import GettingStarted from "./pages/GettingStarted";
@@ -33,6 +34,7 @@ function ThemedApp() {
           <Route path="package-search" element={<PackageSearch />} />
           <Route path="vendor-sbom" element={<VendorSbomAnalysis />} />
           <Route path="cve-search" element={<CveSearch />} />
+          <Route path="adhoc-scan" element={<AdHocScan />} />
           <Route path="pending-scans" element={<PendingScans />} />
           <Route path="completed-scans" element={<CompletedScans />} />
           <Route path="getting-started" element={<GettingStarted />} />

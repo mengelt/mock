@@ -19,6 +19,11 @@ import {
   CircularProgress,
   Skeleton,
   alpha,
+  TextField,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
 import {
   NavigateNextRounded,
@@ -36,6 +41,11 @@ import {
   BuildRounded,
   FiberManualRecordRounded,
   LogoutRounded,
+  BugReportRounded,
+  VpnKeyRounded,
+  ContentCopyRounded,
+  RefreshRounded,
+  DeleteOutlineRounded,
 } from "@mui/icons-material";
 import { SettingsRounded, CheckRounded, CoronavirusRounded } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
@@ -109,6 +119,49 @@ const announcements = [
     tag: "Enhancement",
     tagColor: "#6366f1",
     unread: false,
+  },
+];
+
+const mockApiKeys = [
+  {
+    id: "key-1",
+    name: "CI/CD Pipeline",
+    prefix: "dvk_prod_",
+    maskedKey: "dvk_prod_••••••••••••a3f8",
+    created: "Jan 5, 2026",
+    lastUsed: "Feb 9, 2026",
+    status: "active",
+    scopes: ["scan:write", "reports:read"],
+  },
+  {
+    id: "key-2",
+    name: "Local Development",
+    prefix: "dvk_dev_",
+    maskedKey: "dvk_dev_••••••••••••9c12",
+    created: "Dec 12, 2025",
+    lastUsed: "Feb 8, 2026",
+    status: "active",
+    scopes: ["scan:write", "scan:read"],
+  },
+  {
+    id: "key-3",
+    name: "Reporting Dashboard",
+    prefix: "dvk_read_",
+    maskedKey: "dvk_read_••••••••••••7b4e",
+    created: "Nov 20, 2025",
+    lastUsed: "Jan 30, 2026",
+    status: "active",
+    scopes: ["reports:read"],
+  },
+  {
+    id: "key-4",
+    name: "Legacy Integration",
+    prefix: "dvk_old_",
+    maskedKey: "dvk_old_••••••••••••1d5a",
+    created: "Aug 3, 2025",
+    lastUsed: "Oct 14, 2025",
+    status: "expired",
+    scopes: ["scan:write", "reports:read", "admin:read"],
   },
 ];
 
@@ -208,6 +261,20 @@ export default function TopBar() {
                 <Badge badgeContent={unreadCount} color="error" sx={{ "& .MuiBadge-badge": { fontSize: "0.65rem", height: 18, minWidth: 18 } }}>
                   <CampaignRounded sx={{ fontSize: 22 }} />
                 </Badge>
+              </IconButton>
+            </Tooltip>
+
+            {/* Report a Bug */}
+            <Tooltip title="Report a Bug" arrow>
+              <IconButton onClick={() => setModal("bugreport")} sx={{ color: "#64748b" }}>
+                <BugReportRounded sx={{ fontSize: 22 }} />
+              </IconButton>
+            </Tooltip>
+
+            {/* API Keys */}
+            <Tooltip title="API Keys" arrow>
+              <IconButton onClick={() => setModal("apikeys")} sx={{ color: "#64748b" }}>
+                <VpnKeyRounded sx={{ fontSize: 22 }} />
               </IconButton>
             </Tooltip>
 
@@ -644,6 +711,319 @@ export default function TopBar() {
               Built by Application Security Engineering
             </Typography>
           </Box>
+        </DialogContent>
+      </Dialog>
+
+      {/* ── Report a Bug Modal ── */}
+      <Dialog
+        open={modal === "bugreport"}
+        onClose={close}
+        maxWidth="md"
+        PaperProps={{
+          sx: {
+            borderRadius: 3,
+            width: 680,
+            maxWidth: "95vw",
+            border: "1px solid",
+            borderColor: alpha("#94a3b8", 0.2),
+          },
+        }}
+      >
+        <ModalHeader title="Report a Bug" onClose={close} />
+        <DialogContent sx={{ pt: "0 !important", px: 3, pb: 3 }}>
+          <Typography sx={{ fontSize: "0.8rem", color: "#64748b", mb: 2 }}>
+            Describe the issue you encountered. Our team will review and follow up.
+          </Typography>
+
+          <TextField
+            label="Title"
+            placeholder="Brief summary of the issue"
+            fullWidth
+            size="small"
+            sx={{ mb: 2 }}
+          />
+
+          <FormControl fullWidth size="small" sx={{ mb: 2 }}>
+            <InputLabel>Severity</InputLabel>
+            <Select label="Severity" defaultValue="">
+              <MenuItem value="critical">Critical — System unusable</MenuItem>
+              <MenuItem value="high">High — Major feature broken</MenuItem>
+              <MenuItem value="medium">Medium — Feature impaired</MenuItem>
+              <MenuItem value="low">Low — Minor / cosmetic</MenuItem>
+            </Select>
+          </FormControl>
+
+          <FormControl fullWidth size="small" sx={{ mb: 2 }}>
+            <InputLabel>Category</InputLabel>
+            <Select label="Category" defaultValue="">
+              <MenuItem value="scanning">Scanning</MenuItem>
+              <MenuItem value="reporting">Reporting</MenuItem>
+              <MenuItem value="dashboard">Dashboard</MenuItem>
+              <MenuItem value="api">API / Integrations</MenuItem>
+              <MenuItem value="auth">Authentication</MenuItem>
+              <MenuItem value="ui">UI / Display</MenuItem>
+              <MenuItem value="other">Other</MenuItem>
+            </Select>
+          </FormControl>
+
+          <TextField
+            label="Steps to Reproduce"
+            placeholder="1. Go to...&#10;2. Click on...&#10;3. Observe..."
+            fullWidth
+            size="small"
+            multiline
+            rows={3}
+            sx={{ mb: 2 }}
+          />
+
+          <TextField
+            label="Expected Behavior"
+            placeholder="What did you expect to happen?"
+            fullWidth
+            size="small"
+            multiline
+            rows={2}
+            sx={{ mb: 2 }}
+          />
+
+          <TextField
+            label="Actual Behavior"
+            placeholder="What actually happened?"
+            fullWidth
+            size="small"
+            multiline
+            rows={2}
+            sx={{ mb: 2 }}
+          />
+
+          <Box sx={{ p: 2, border: "1px dashed", borderColor: alpha("#94a3b8", 0.3), borderRadius: 2, textAlign: "center", mb: 2.5 }}>
+            <Typography sx={{ fontSize: "0.8rem", color: "#94a3b8" }}>
+              Drag & drop a screenshot here, or click to browse
+            </Typography>
+            <Typography sx={{ fontSize: "0.68rem", color: alpha("#94a3b8", 0.6), mt: 0.5 }}>
+              PNG, JPG up to 5 MB
+            </Typography>
+          </Box>
+
+          <Box sx={{ display: "flex", gap: 1.5, justifyContent: "flex-end" }}>
+            <Button
+              variant="outlined"
+              onClick={close}
+              sx={{
+                textTransform: "none",
+                fontWeight: 600,
+                fontSize: "0.82rem",
+                color: "#64748b",
+                borderColor: alpha("#94a3b8", 0.25),
+                "&:hover": { borderColor: "#94a3b8", bgcolor: alpha("#94a3b8", 0.04) },
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              sx={{
+                textTransform: "none",
+                fontWeight: 600,
+                fontSize: "0.82rem",
+                bgcolor: "#3b82f6",
+                "&:hover": { bgcolor: "#2563eb" },
+              }}
+            >
+              Submit Bug Report
+            </Button>
+          </Box>
+        </DialogContent>
+      </Dialog>
+
+      {/* ── API Keys Modal ── */}
+      <Dialog
+        open={modal === "apikeys"}
+        onClose={close}
+        maxWidth="md"
+        PaperProps={{
+          sx: {
+            borderRadius: 3,
+            width: 880,
+            maxWidth: "95vw",
+            border: "1px solid",
+            borderColor: alpha("#94a3b8", 0.2),
+          },
+        }}
+      >
+        <ModalHeader title="API Keys" onClose={close} />
+        <DialogContent sx={{ pt: "0 !important", px: 3, pb: 3 }}>
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 2 }}>
+            <Typography sx={{ fontSize: "0.8rem", color: "#64748b" }}>
+              Manage your personal API keys for DeepView integrations.
+            </Typography>
+            <Button
+              variant="contained"
+              size="small"
+              startIcon={<VpnKeyRounded sx={{ fontSize: 16 }} />}
+              sx={{
+                textTransform: "none",
+                fontWeight: 600,
+                fontSize: "0.78rem",
+                bgcolor: "#3b82f6",
+                flexShrink: 0,
+                "&:hover": { bgcolor: "#2563eb" },
+              }}
+            >
+              Generate New Key
+            </Button>
+          </Box>
+
+          <Box
+            component="table"
+            sx={{
+              width: "100%",
+              borderCollapse: "separate",
+              borderSpacing: 0,
+              border: "1px solid",
+              borderColor: alpha("#94a3b8", 0.15),
+              borderRadius: 2,
+              overflow: "hidden",
+              "& th, & td": {
+                px: 2,
+                py: 1.5,
+                fontSize: "0.82rem",
+                borderBottom: "1px solid",
+                borderColor: alpha("#94a3b8", 0.1),
+                textAlign: "left",
+                whiteSpace: "nowrap",
+              },
+              "& th": {
+                fontWeight: 700,
+                fontSize: "0.7rem",
+                color: "#64748b",
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
+                bgcolor: alpha("#f8fafc", 0.8),
+              },
+              "& tbody tr:last-child td": { borderBottom: "none" },
+              "& tbody tr:hover": { bgcolor: alpha("#3b82f6", 0.03) },
+            }}
+          >
+            <Box component="thead">
+              <Box component="tr">
+                <Box component="th">Name</Box>
+                <Box component="th">Key</Box>
+                <Box component="th">Scopes</Box>
+                <Box component="th">Created</Box>
+                <Box component="th">Last Used</Box>
+                <Box component="th" sx={{ textAlign: "center !important" }}>Status</Box>
+                <Box component="th" sx={{ textAlign: "center !important" }}>Actions</Box>
+              </Box>
+            </Box>
+            <Box component="tbody">
+              {mockApiKeys.map((key) => {
+                const isExpired = key.status === "expired";
+                return (
+                  <Box component="tr" key={key.id}>
+                    <Box component="td">
+                      <Typography sx={{ fontWeight: 600, fontSize: "0.85rem" }}>{key.name}</Typography>
+                    </Box>
+                    <Box component="td">
+                      <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
+                        <Typography
+                          sx={{
+                            fontSize: "0.78rem",
+                            fontFamily: "monospace",
+                            color: isExpired ? "#94a3b8" : "#1e293b",
+                            bgcolor: alpha("#94a3b8", 0.06),
+                            px: 1,
+                            py: 0.3,
+                            borderRadius: 1,
+                          }}
+                        >
+                          {key.maskedKey}
+                        </Typography>
+                        <Tooltip title="Copy" arrow>
+                          <IconButton size="small" sx={{ color: "#94a3b8", p: 0.4, "&:hover": { color: "#3b82f6" } }}>
+                            <ContentCopyRounded sx={{ fontSize: 15 }} />
+                          </IconButton>
+                        </Tooltip>
+                      </Box>
+                    </Box>
+                    <Box component="td" sx={{ whiteSpace: "normal !important" }}>
+                      <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap" }}>
+                        {key.scopes.map((scope) => (
+                          <Chip
+                            key={scope}
+                            label={scope}
+                            size="small"
+                            sx={{
+                              height: 20,
+                              fontSize: "0.65rem",
+                              fontWeight: 600,
+                              fontFamily: "monospace",
+                              bgcolor: alpha("#6366f1", 0.08),
+                              color: "#6366f1",
+                            }}
+                          />
+                        ))}
+                      </Box>
+                    </Box>
+                    <Box component="td" sx={{ color: "#64748b", fontSize: "0.78rem !important" }}>
+                      {key.created}
+                    </Box>
+                    <Box component="td" sx={{ color: "#64748b", fontSize: "0.78rem !important" }}>
+                      {key.lastUsed}
+                    </Box>
+                    <Box component="td" sx={{ textAlign: "center !important" }}>
+                      <Chip
+                        label={isExpired ? "Expired" : "Active"}
+                        size="small"
+                        sx={{
+                          height: 22,
+                          fontSize: "0.68rem",
+                          fontWeight: 700,
+                          bgcolor: isExpired ? alpha("#dc2626", 0.1) : alpha("#22c55e", 0.1),
+                          color: isExpired ? "#dc2626" : "#22c55e",
+                          border: `1px solid ${isExpired ? alpha("#dc2626", 0.25) : alpha("#22c55e", 0.25)}`,
+                        }}
+                      />
+                    </Box>
+                    <Box component="td" sx={{ textAlign: "center !important" }}>
+                      <Box sx={{ display: "flex", gap: 0.5, justifyContent: "center" }}>
+                        <Tooltip title={isExpired ? "Key expired" : "Refresh key"} arrow>
+                          <span>
+                            <IconButton
+                              size="small"
+                              disabled={isExpired}
+                              sx={{
+                                color: "#3b82f6",
+                                "&:hover": { bgcolor: alpha("#3b82f6", 0.08) },
+                                "&.Mui-disabled": { color: alpha("#94a3b8", 0.4) },
+                              }}
+                            >
+                              <RefreshRounded sx={{ fontSize: 18 }} />
+                            </IconButton>
+                          </span>
+                        </Tooltip>
+                        <Tooltip title="Revoke key" arrow>
+                          <IconButton
+                            size="small"
+                            sx={{
+                              color: "#dc2626",
+                              "&:hover": { bgcolor: alpha("#dc2626", 0.08) },
+                            }}
+                          >
+                            <DeleteOutlineRounded sx={{ fontSize: 18 }} />
+                          </IconButton>
+                        </Tooltip>
+                      </Box>
+                    </Box>
+                  </Box>
+                );
+              })}
+            </Box>
+          </Box>
+
+          <Typography sx={{ fontSize: "0.7rem", color: "#94a3b8", textAlign: "center", mt: 2 }}>
+            Keys are scoped to your user account. Revoked keys cannot be recovered.
+          </Typography>
         </DialogContent>
       </Dialog>
 
