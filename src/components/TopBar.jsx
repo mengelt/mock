@@ -46,6 +46,7 @@ import {
   ContentCopyRounded,
   RefreshRounded,
   DeleteOutlineRounded,
+  AddRounded,
 } from "@mui/icons-material";
 import { SettingsRounded, CheckRounded, CoronavirusRounded } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
@@ -349,6 +350,137 @@ export default function TopBar() {
               </Box>
             </Box>
           ))}
+
+          <Divider sx={{ borderColor: alpha("#94a3b8", 0.12), mt: 1, mb: 2 }} />
+
+          <Button
+            variant="outlined"
+            fullWidth
+            startIcon={<AddRounded sx={{ fontSize: 18 }} />}
+            onClick={() => setModal("create-announcement")}
+            sx={{
+              textTransform: "none",
+              fontWeight: 600,
+              fontSize: "0.85rem",
+              color: "#3b82f6",
+              borderColor: alpha("#3b82f6", 0.3),
+              py: 1,
+              "&:hover": {
+                borderColor: "#3b82f6",
+                bgcolor: alpha("#3b82f6", 0.04),
+              },
+            }}
+          >
+            Create Announcement
+          </Button>
+        </DialogContent>
+      </Dialog>
+
+      {/* ── Create Announcement Modal ── */}
+      <Dialog
+        open={modal === "create-announcement"}
+        onClose={close}
+        PaperProps={{
+          sx: {
+            borderRadius: 3,
+            width: 560,
+            maxWidth: "95vw",
+            border: "1px solid",
+            borderColor: alpha("#94a3b8", 0.2),
+          },
+        }}
+      >
+        <ModalHeader title="Create Announcement" onClose={close} />
+        <DialogContent sx={{ pt: "0 !important", px: 3, pb: 3 }}>
+          <Typography sx={{ fontSize: "0.8rem", color: "#64748b", mb: 2 }}>
+            Publish an announcement visible to all platform users.
+          </Typography>
+
+          <TextField
+            label="Subject"
+            placeholder="Announcement title"
+            fullWidth
+            size="small"
+            sx={{ mb: 2 }}
+          />
+
+          <FormControl fullWidth size="small" sx={{ mb: 2 }}>
+            <InputLabel>Type</InputLabel>
+            <Select label="Type" defaultValue="">
+              <MenuItem value="feature">
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <Box sx={{ width: 8, height: 8, borderRadius: "50%", bgcolor: "#3b82f6" }} />
+                  Feature
+                </Box>
+              </MenuItem>
+              <MenuItem value="enhancement">
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <Box sx={{ width: 8, height: 8, borderRadius: "50%", bgcolor: "#6366f1" }} />
+                  Enhancement
+                </Box>
+              </MenuItem>
+              <MenuItem value="bugfix">
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <Box sx={{ width: 8, height: 8, borderRadius: "50%", bgcolor: "#22c55e" }} />
+                  Bug Fix
+                </Box>
+              </MenuItem>
+              <MenuItem value="maintenance">
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <Box sx={{ width: 8, height: 8, borderRadius: "50%", bgcolor: "#f59e0b" }} />
+                  Maintenance
+                </Box>
+              </MenuItem>
+            </Select>
+          </FormControl>
+
+          <TextField
+            label="Publish Date"
+            type="date"
+            fullWidth
+            size="small"
+            InputLabelProps={{ shrink: true }}
+            sx={{ mb: 2 }}
+          />
+
+          <TextField
+            label="Body"
+            placeholder="Announcement details..."
+            fullWidth
+            size="small"
+            multiline
+            rows={4}
+            sx={{ mb: 2.5 }}
+          />
+
+          <Box sx={{ display: "flex", gap: 1.5, justifyContent: "flex-end" }}>
+            <Button
+              variant="outlined"
+              onClick={close}
+              sx={{
+                textTransform: "none",
+                fontWeight: 600,
+                fontSize: "0.82rem",
+                color: "#64748b",
+                borderColor: alpha("#94a3b8", 0.25),
+                "&:hover": { borderColor: "#94a3b8", bgcolor: alpha("#94a3b8", 0.04) },
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              sx={{
+                textTransform: "none",
+                fontWeight: 600,
+                fontSize: "0.82rem",
+                bgcolor: "#3b82f6",
+                "&:hover": { bgcolor: "#2563eb" },
+              }}
+            >
+              Publish
+            </Button>
+          </Box>
         </DialogContent>
       </Dialog>
 
