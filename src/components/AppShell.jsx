@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import Sidebar, { DRAWER_WIDTH } from "./Sidebar";
 import TopBar from "./TopBar";
@@ -13,11 +13,13 @@ export default function AppShell() {
         sx={{
           flexGrow: 1,
           mt: "56px",
-          p: 3,
+          py: 3,
           maxWidth: `calc(100% - ${DRAWER_WIDTH}px)`,
         }}
       >
-        <Outlet />
+        <Container maxWidth="lg">
+          <Outlet />
+        </Container>
       </Box>
     </Box>
   );
